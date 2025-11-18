@@ -25,8 +25,6 @@ public class Main {
         int totalCost = 0;
 
         while (true) { 
-            int finalCost = 1;
-
             System.out.println("Заполнение нового заказа.");
             System.out.print("Введите страну: ");
             country = scanner.nextLine();
@@ -43,23 +41,15 @@ public class Main {
 
             scanner.nextLine();
 
-            for(Map.Entry<Adress, Integer> kv : costPerAdress.entrySet()) {
-                Adress adress = kv.getKey();
-                int cost = kv.getValue();
+            Adress tempAdress = new Adress(country, city);
 
-                if (adress.getCountry().equals(country) && adress.getCity().equals(city)) {
-                    finalCost = cost * weight;
-                    totalCost += finalCost;
+            if(costPerAdress.containsKey(tempAdress)) {
+                int finalCost = costPerAdress.get(tempAdress) * weight;
+                totalCost += finalCost;
 
-                    System.out.println("Стоимость доставки составит: " + finalCost + " руб.");
-                    System.out.println("Общая стоимость всех доставок: " + totalCost + " руб.\n");
-
-                    break;
-                }
-
-            }
-
-            if (finalCost == 1) {
+                System.out.println("Стоимость доставки составит: " + finalCost + " руб.");
+                System.out.println("Общая стоимость всех доставок: " + totalCost + " руб.\n");
+            } else {
                 System.out.println("Доставки по этому адресу нет.\n");
             }
         }
